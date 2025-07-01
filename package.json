@@ -9,7 +9,7 @@
     "education",
     "werkstuk",
     "stappenplan",
-    "netlify",
+    "vercel",
     "typescript"
   ],
   "author": "Tom Naberink",
@@ -17,15 +17,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "netlify-build": "next build"
+    "lint": "next lint"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "@netlify/plugin-nextjs": "^4.41.3",
     "next": "15.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
