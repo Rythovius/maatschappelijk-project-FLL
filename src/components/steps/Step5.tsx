@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 interface Step5Data {
   inleiding: string
   aanpak: string
@@ -8,15 +10,27 @@ interface Step5Data {
   bronnenlijst: string
 }
 
+interface Step2Data {
+  doel: string
+  ideaalSituatie: string
+  tevreden: string
+  nietTevreden: string
+}
+
 interface Step5Props {
   data: Step5Data
   onUpdate: (data: Partial<Step5Data>) => void
+  step2Data?: Step2Data // Add step2 data as optional prop
 }
 
-export default function Step5({ data, onUpdate }: Step5Props) {
+export default function Step5({ data, onUpdate, step2Data }: Step5Props) {
+  const [showGoalsModal, setShowGoalsModal] = useState(false)
+
   const getCompletedSections = () => {
     return Object.values(data).filter(section => section.trim().length > 0).length
   }
+
+  const hasStep2Data = step2Data && (step2Data.doel || step2Data.ideaalSituatie || step2Data.tevreden || step2Data.nietTevreden)
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8">
@@ -46,6 +60,111 @@ export default function Step5({ data, onUpdate }: Step5Props) {
           </p>
         </div>
       </div>
+
+      {/* Doelen uit Stap 2 - Herinnering */}
+      {hasStep2Data && (
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-purple-800 flex items-center">
+              🎯 Vergeet je doelen niet!
+            </h3>
+            <button
+              onClick={() => setShowGoalsModal(true)}
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm flex items-center space-x-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span>Bekijk je doelen uit Stap 2</span>
+            </button>
+          </div>
+          <div className="text-purple-700">
+            <p className="text-sm">
+              Bij het schrijven van je eindverslag is het belangrijk om terug te kijken naar de doelen die je in Stap 2 hebt gesteld. 
+              <strong> Gebruik de knop hierboven om je doelen te bekijken</strong> en verwerk deze in je conclusie.
+            </p>
+            <ul className="list-disc list-inside text-sm mt-2 space-y-1">
+              <li>Zijn je doelen behaald?</li>
+              <li>Wat ging anders dan verwacht?</li>
+              <li>Ben je tevreden met het resultaat?</li>
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* Goals Modal */}
+      {showGoalsModal && hasStep2Data && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-gray-800 flex items-center">
+                  <span className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center mr-2 text-white text-sm">
+                    2
+                  </span>
+                  Jouw doelen uit Stap 2
+                </h3>
+                <button
+                  onClick={() => setShowGoalsModal(false)}
+                  className="text-gray-500 hover:text-gray-700 p-1"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {step2Data?.doel && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 mb-2">🎯 Hoofddoel</h4>
+                    <p className="text-blue-700 text-sm whitespace-pre-wrap">{step2Data.doel}</p>
+                  </div>
+                )}
+
+                {step2Data?.ideaalSituatie && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-green-800 mb-2">✨ Ideale situatie</h4>
+                    <p className="text-green-700 text-sm whitespace-pre-wrap">{step2Data.ideaalSituatie}</p>
+                  </div>
+                )}
+
+                {step2Data?.tevreden && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-yellow-800 mb-2">😊 Tevreden wanneer</h4>
+                    <p className="text-yellow-700 text-sm whitespace-pre-wrap">{step2Data.tevreden}</p>
+                  </div>
+                )}
+
+                {step2Data?.nietTevreden && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-red-800 mb-2">😞 Niet tevreden wanneer</h4>
+                    <p className="text-red-700 text-sm whitespace-pre-wrap">{step2Data.nietTevreden}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-800 mb-2">💡 Tip voor je conclusie</h4>
+                <p className="text-gray-700 text-sm">
+                  Gebruik deze doelen bij het schrijven van je conclusie. Vergelijk wat je wilde bereiken met wat je daadwerkelijk hebt bereikt. 
+                  Dit maakt je conclusie veel sterker en persoonlijker!
+                </p>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setShowGoalsModal(false)}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Sluiten
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Verslag secties */}
       <div className="space-y-8">
@@ -120,25 +239,40 @@ export default function Step5({ data, onUpdate }: Step5Props) {
 
         {/* Conclusie */}
         <div className="border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-            🎯 Conclusie
-          </h3>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+              🎯 Conclusie
+            </h3>
+            {hasStep2Data && (
+              <button
+                onClick={() => setShowGoalsModal(true)}
+                className="px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm flex items-center space-x-1"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span>Bekijk doelen</span>
+              </button>
+            )}
+          </div>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
             <div className="text-sm text-gray-700">
               <p className="font-medium mb-2">Je conclusie bevat:</p>
               <ul className="list-disc list-inside space-y-1">
-                <li>Wat het doel was</li>
+                <li><strong>Wat het doel was</strong> (gebruik je doelen uit Stap 2!)</li>
                 <li>Wat er niet goed ging</li>
                 <li>Welke oplossing je hiervoor hebt geprobeerd</li>
                 <li>Hoe je verder bent gegaan als het niet op te lossen was</li>
                 <li>Wat je de volgende keer anders zou willen doen</li>
+                <li><strong>Of je tevreden bent</strong> (vergelijk met je criteria uit Stap 2)</li>
               </ul>
             </div>
           </div>
           <textarea
             value={data.conclusie}
             onChange={(e) => onUpdate({ conclusie: e.target.value })}
-            placeholder="Evalueer jullie project: zijn de doelen behaald? Wat ging goed en wat niet? Wat zouden jullie anders doen?"
+            placeholder="Evalueer jullie project: zijn de doelen behaald? Wat ging goed en wat niet? Wat zouden jullie anders doen? Vergeet niet je doelen uit Stap 2 te gebruiken!"
             className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
             rows={8}
           />
@@ -186,6 +320,7 @@ export default function Step5({ data, onUpdate }: Step5Props) {
         <h3 className="text-lg font-semibold text-green-800 mb-3">💡 Tips voor een goed eindverslag</h3>
         <div className="text-green-700 space-y-2">
           <ul className="list-disc list-inside space-y-1">
+            <li><strong>Gebruik je doelen:</strong> Verwijs expliciet naar de doelen die je in Stap 2 hebt gesteld</li>
             <li><strong>Foto's:</strong> Gebruik foto's om te laten zien wat je hebt gedaan, maar leg altijd uit wat de lezer ziet</li>
             <li><strong>Eigen woorden:</strong> Schrijf alles in je eigen woorden, geen copy-paste uit bronnen</li>
             <li><strong>Eerlijk zijn:</strong> Vertel ook wat niet goed ging - dat hoort erbij!</li>

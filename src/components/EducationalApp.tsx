@@ -146,7 +146,11 @@ export default function EducationalApp() {
       case 4:
         return <Step4 data={appData.step4} onUpdate={(data) => updateStepData('step4', data)} />
       case 5:
-        return <Step5 data={appData.step5} onUpdate={(data) => updateStepData('step5', data)} />
+        return <Step5 
+          data={appData.step5} 
+          onUpdate={(data) => updateStepData('step5', data)}
+          step2Data={appData.step2} // Pass step2 data to step5
+        />
       default:
         return <Step1 data={appData.step1} onUpdate={(data) => updateStepData('step1', data)} />
     }
@@ -264,6 +268,7 @@ export default function EducationalApp() {
               )}
               {currentStep === 5 && (
                 <ul className="space-y-2">
+                  <li>• Gebruik je doelen uit Stap 2 in je conclusie</li>
                   <li>• Beschrijf wat je hebt gedaan</li>
                   <li>• Gebruik foto's om te illustreren</li>
                   <li>• Evalueer of je doelen zijn behaald</li>
