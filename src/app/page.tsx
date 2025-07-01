@@ -37,7 +37,7 @@ export default function Home() {
             <span>📚</span>
           </div>
           <p className="text-gray-500 text-sm mt-2">
-            Educatieve App door Tom Naberink • Powered by Next.js & Gemini AI
+            WON onderzoekshulp Rythovius College
           </p>
         </div>
       </div>

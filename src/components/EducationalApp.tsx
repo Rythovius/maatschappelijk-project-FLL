@@ -34,12 +34,7 @@ interface AppData {
     eigenVraag4: { text: string; score: number }
   }
   step4: {
-    bron1: { url: string; waarom: string; samenvatting: string }
-    bron2: { url: string; waarom: string; samenvatting: string }
-    bron3: { url: string; waarom: string; samenvatting: string }
-    bron4: { url: string; waarom: string; samenvatting: string }
-    bron5: { url: string; waarom: string; samenvatting: string }
-    bron6: { url: string; waarom: string; samenvatting: string }
+    [key: string]: { url: string; waarom: string; samenvatting: string } // Allow dynamic bron keys
   }
   step5: {
     inleiding: string
@@ -264,6 +259,7 @@ export default function EducationalApp() {
                   <li>• Noteer altijd de URL</li>
                   <li>• Maak korte samenvattingen</li>
                   <li>• Denk aan interviews met experts</li>
+                  <li>• Voeg extra bronnen toe als je ze nodig hebt</li>
                 </ul>
               )}
               {currentStep === 5 && (
