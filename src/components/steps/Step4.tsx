@@ -251,7 +251,7 @@ export default function Step4({ data, onUpdate }: Step4Props) {
                 <li>• Blogs zonder bronvermelding</li>
                 <li>• Social media posts</li>
                 <li>• Commerciële websites met belangen</li>
-                <li>• Oude informatie (>5 jaar)</li>
+                <li>• Oude informatie (&gt;5 jaar)</li>
               </ul>
             </div>
           </div>
