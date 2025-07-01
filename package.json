@@ -1,18 +1,19 @@
 {
-  "name": "educational-app",
+  "name": "rythovius-won-onderzoekshulp",
   "version": "0.1.0",
   "private": true,
-  "description": "Een educatieve app voor het stappenplan werkstuk - Gemaakt door Tom Naberink",
+  "description": "Een digitale begeleider voor het maken van een werkstuk - Rythovius College",
   "keywords": [
     "nextjs",
-    "gemini",
     "education",
     "werkstuk",
     "stappenplan",
-    "vercel",
+    "rythovius",
+    "won",
+    "onderzoekshulp",
     "typescript"
   ],
-  "author": "Tom Naberink",
+  "author": "Rythovius College",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
