@@ -7,6 +7,7 @@ import Step3 from './steps/Step3'
 import Step4 from './steps/Step4'
 import Step5 from './steps/Step5'
 import AIChat from './AIChat'
+import PDFExport from './PDFExport'
 
 interface AppData {
   step1: {
@@ -199,6 +200,20 @@ export default function EducationalApp() {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* PDF Export */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <span className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-2">
+                📄
+              </span>
+              Exporteren
+            </h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Download je werkstuk als PDF om te delen of af te drukken.
+            </p>
+            <PDFExport data={appData} />
+          </div>
+
           {/* AI Assistant */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
